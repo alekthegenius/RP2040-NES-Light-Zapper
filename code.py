@@ -7,9 +7,6 @@ from adafruit_hid.mouse import Mouse
 from digitalio import DigitalInOut, Direction, Pull
 import simpleio
 
-btn = DigitalInOut(board.GP2)
-btn.direction = Direction.INPUT
-btn.pull = Pull.UP
 
 m = Mouse(usb_hid.devices)
 i2c = busio.I2C(board.GP1, board.GP0)  # uses board.SCL and board.SDA
@@ -33,18 +30,3 @@ while True:
     #print("X: {}".format(x))
     if (x >=2 or x <= -2)  and (y >=2 or y <= -2):
         m.move(x=x, y=-y)
-    
-    if btn.value == False:
-        #if btn.value == True:
-        m.click(Mouse.LEFT_BUTTON)
-        simpleio.tone(board.GP3, 5000, duration=.25)
-        time.sleep(0.1)
-        #if btn.value == False:
-           # simpleio.tone(board.GP3, 500, duration=.5)
-           # m.click(Mouse.RIGHT_BUTTON)
-           # time.sleep(1)
-           # if btn.value == False:
-            #    simpleio.tone(board.GP3, 1000, duration=2.0)
-              #  m.move(x=-1920, y=1080)
-               # time.sleep(1)
-    #time.sleep(1)
