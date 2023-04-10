@@ -12,6 +12,10 @@ m = Mouse(usb_hid.devices)
 i2c = busio.I2C(board.GP1, board.GP0)  # uses board.SCL and board.SDA
 mpu = adafruit_mpu6050.MPU6050(i2c)
 
+btn = DigitalInOut(board.GP2)
+btn.direction = Direction.INPUT
+btn.pull = Pull.UP
+
 simpleio.tone(board.GP3, 1000, duration=2.0)
 time.sleep(2)
 
@@ -30,3 +34,8 @@ while True:
     #print("X: {}".format(x))
     if (x >=2 or x <= -2)  and (y >=2 or y <= -2):
         m.move(x=x, y=-y)
+        
+    if btn.value == False:
+        m.click(Mouse.LEFT_BUTTON)
+        simpleio.tone(board.GP3, 5000, duration=.25)
+
